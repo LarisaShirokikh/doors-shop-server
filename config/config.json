@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": null,
+    "password": null,
+    "database": "test",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": "3306"
+  },
+  "test": {
+    "username": null,
+    "password": null,
+    "database": "test",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": "3306"
+  },
+  "production": {
+    "username": null,
+    "password": null,
+    "database": "test",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": "3306"
+  }
+}
