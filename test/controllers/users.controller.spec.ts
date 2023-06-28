@@ -34,7 +34,7 @@ describe('Users Controller', () => {
 
 
     afterEach(async () => {
-        await User.destroy({ where: { username: 'testJohn' } })
+        await User.destroy({ where: { username: 'Test' } })
     })
 
     it('should create user', async () => {
