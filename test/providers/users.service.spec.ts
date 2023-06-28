@@ -7,12 +7,13 @@ import { SequelizeConfigService } from "src/config/sequelizeConfig.service";
 import { UsersModule } from "src/users/users.module";
 import * as bcrypt from 'bcrypt';
 import { afterEach } from "node:test";
-import * as request from 'supertest';
 import { User } from "src/users/users.model";
+import { UsersService } from "src/users/users.service";
 
 
-describe('Users Controller', () => {
+describe('Users Service', () => {
     let app: INestApplication;
+    let usersService: UsersService;
 
     beforeEach(async () => {
         const testModule: TestingModule = await Test.createTestingModule({
@@ -28,13 +29,14 @@ describe('Users Controller', () => {
             ]
         }).compile();
 
+        usersService = testModule.get<UsersService>(UsersService);
         app = testModule.createNestApplication();
         await app.init();
     })
 
 
     afterEach(async () => {
-        await User.destroy({ where: { username: 'testJohn' } })
+        await User.destroy({ where: { username: 'Test' } })
     })
 
     it('should create user', async () => {
@@ -43,14 +45,14 @@ describe('Users Controller', () => {
             email: 'test@example.com',
             password: 'test123'
         }
-        const response = await request(app.getHttpServer())
-            .post('/users/signup')
-            .send(newUser);
+        const user = (await usersService.create(newUser)) as User;
 
-        const passwordIsValid = await bcrypt.compare(newUser.password, response.body.password)
+        const passwordIsValid = await bcrypt.compare(newUser.password, user.password)
 
-        expect(response.body.username).toBe(newUser.username)
+
+
+        expect(user.username).toBe(newUser.username)
         expect(passwordIsValid).toBe(true)
-        expect(response.body.email).toBe(newUser.email)
+        expect(user.email).toBe(newUser.email)
     })
 })
