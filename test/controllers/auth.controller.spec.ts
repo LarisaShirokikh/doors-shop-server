@@ -87,4 +87,11 @@ describe('Auth Controller', () => {
         expect(loginCheck.body.email).toBe(mockerUser.email)
 
     })
+
+    it('should log out', async () => {
+        const response = await request(app.getHttpServer())
+            .get('/users/logout')
+
+        expect(response.body.message).toBe('Log out')
+    })
 })
