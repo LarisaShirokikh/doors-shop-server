@@ -74,16 +74,16 @@ describe('Auth Controller', () => {
         expect(response.body.user.email).toBe(mockerUser.email)
     })
 
-    it('should log out user', async () => {
+    it('should login check', async () => {
         const login = await request(app.getHttpServer())
             .post('/users/login')
-            .set({ username: mockerUser.username, password: mockerUser.password });
+            .send({ username: mockerUser.username, password: mockerUser.password });
 
         const loginCheck = await request(app.getHttpServer())
             .get('/users/login-check')
             .set('Cookie', login.headers['set-cookie']);
 
-        expect(loginCheck.body.user.username).toBe(mockerUser.username)
+        expect(loginCheck.body.username).toBe(mockerUser.username)
         expect(loginCheck.body.email).toBe(mockerUser.email)
 
     })
